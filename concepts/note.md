@@ -367,7 +367,9 @@ Ta có thể dùng kiểu nào cũng được, tuy nhiên Docker khuyên ta nên
 
 Shell form invoke 1 câu lệnh shell, với đầy đủ tính năng của shell, ta có thể truy cập biến ENV, dùng &&, ...
 
-Còn với exec form, Docker parse chuỗi của ta theo format JSON, vì vậy ta phải dùng mảng của các string (nhớ double quote), sau đó làm gì đó ma giáo, nhưng không chạy như 1 câu lệnh shell, vì vậy những tính năng của shell đều cuốn theo chiều gió hết. Muốn sử dụng, ta phải thêm lệnh shell vào `CMD ["sh", "-c", "echo $HOME"]`
+Còn với exec form, Docker parse chuỗi của ta theo format JSON, vì vậy ta phải dùng mảng của các string (nhớ double quote), sau đó làm gì đó ma giáo, nhưng không chạy như 1 câu lệnh shell, vì vậy những tính năng của shell đều cuốn theo chiều gió hết. Muốn sử dụng, ta phải thêm lệnh shell vào `CMD ["sh", "-c", "echo $HOME"]` (tuy nhiên ta đã có default ENTRYPOINT là `/bin/sh -c` rồi nên chỉ khi bạn override nó mới cần lưu ý.)
+
+Lưu ý nữa là khi dùng `ENTRYPOINT` theo shell form, `CMD` và command của `docker run` sẽ bị ignore hết.
 
 Ngoài ra, nó còn có liên quan đến shell processing, signal processing, khá là hại não, mọi người có thể dựa vào những keyword này để tìm hiểu thêm.
 
