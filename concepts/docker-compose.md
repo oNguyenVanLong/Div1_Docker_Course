@@ -143,12 +143,12 @@ volumes:
 
 * Khi thay đổi settings trong file docker-compose thì không cần rebuild lại image (trừ những thứ liên quan đến việc build)
 
-* `network`: 
+* `network`:
 
   * Nếu ta không muốn dùng network mặc định của docker thì có thể tự định nghĩa.
   * Chung network, service có thể gọi tới nhau thông qua tên service
 
-* `volumes`: 
+* `volumes`:
 
   * Khi ta tự tạo volume ở bên ngoài (external) thì khai báo ở đây để có thể dùng được trong service.
 

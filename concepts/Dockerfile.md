@@ -25,7 +25,7 @@ docker build <args>
   * copy file từ hệ thống sang image
   * source sẽ có context là thư mục chứa Dockerfile
   * destination có context là WORKDIR
-  * VD 
+  * VD
     * Docker file: `/home/sun/app/Dockerfile`
     * WORKDIR /usr/src/app
     * Nếu như ta dùng `COPY Gemfile* ./` nó sẽ copy Gemfile trong thư mục /home/sun/app trên máy ta vào thư mục /usr/src/app trong image
@@ -99,7 +99,7 @@ docker build <args>
   COPY Gemfile* ./
   ```
 
-  thay vì 
+  thay vì
 
   ```Dockerfile
   COPY Gemfile .
@@ -126,7 +126,7 @@ docker build <args>
     ARG SECRET_KEY_BASE
     ARG MYSQL_DB_NAME
     ARG MYSQL_ROOT_PASSWORD
-    
+
     ENV SECRET_KEY_BASE=$SECRET_KEY_BASE
     ENV MYSQL_DB_NAME=$MYSQL_DB_NAME
     ENV MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD
@@ -167,7 +167,58 @@ docker build <args>
 
 # Hoan
 
-Chú ý làm rõ cơ chế build image qua layers
-Hướng dẫn viết Dockerfile cơ bản
+### Cơ chế build image qua layers
 
-        // write your code here
+Docker image được xây dựng dựa trên các layers xếp chồng, giống như việc bạn xếp nhiều viên gạch chồng lên nhau vậy.
+
+Nếu câu lệnh trước đó đã được thực thi và tạo layer thì Docker sẽ sử dụng layer cũ đó chứ không tạo layer mới nữa, giúp giảm thời gian build image và nếu ở một layer có sự thay đổi thì kể từ layer đó trở về sau, tất cả sẽ được build lại.
+
+Khi pull image cũng tương tự như khi chúng ta build image vậy, từng layer được xây dựng theo mô hình cha con, sinh sau đẻ muộn hơn thì là layer con, kế thừa từ layer cha, tất cả đều được đặt tên là <none>, đến layer cuối cùng thì mới đầy đủ image của chúng ta và đặt tên chính xác.
+
+
+## Hướng dẫn dử dụng Dockerfile cơ bản
+
+Build docker image từ Dockerfile
+Ta sử dụng câu lệnh sau:
+
+```
+sudo docker build -t <image_name> .
+```
+
+Ví dụ:
+```
+sudo docker build -t ubuntu-nginx .
+```
+
+Bạn có thể dùng lệnh
+
+`docker images`
+để xem thành quả nhé !
+
+Tạo container từ image.
+Gõ lệnh theo syntax:
+
+```
+sudo docker run -v <forder_in_computer>:<forder_in_container> -p <port_in_computer>:<port_in_container> -it <image_name> /bin/bash
+```
+Trong đó:
+
+-v : Thể hiện việc mount volume, dữ liệu từ thư mục từ máy thật có thể được truy cập từ thư mục của máy ảo.
+
+-p: Cổng mạng từ máy thật để dẫn tới cổng mạng của máy ảo đang chạy.
+
+-t: Chạy container và mở terminal bằng /bin/bash
+
+Ví dụ vào localhost mặc định của nginx:
+
+```
+sudo docker run -p 9000:80 -it ubuntu-nginx /bin/bash
+```
+
+Ví dụ vào thư mục dự án ở máy thật:
+```
+sudo docker run -v  /path/docker_tutorial/webroot:/var/www/html -p 9000:80 -it ubuntu-nginx /bin/bash
+```
+
+Thay thế /path/docker_tutorial/webroot cho đúng với trên máy bạn nhé !
+
