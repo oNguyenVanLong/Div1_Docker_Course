@@ -13,6 +13,9 @@ RUN apt-get update && apt-get install -y \
 RUN mkdir -p /app
 WORKDIR /app
 
+# setting timezone (Asia/Tokyo)
+ENV TZ JST-9
+
 # Copy the Gemfile as well as the Gemfile.lock and install
 # the RubyGems. This is a separate step so the dependencies
 # will be cached unless changes to one of those two files
@@ -22,7 +25,3 @@ RUN bundle install --jobs 20 --retry 5
 
 EXPOSE 3000
 
-# Add a script to be executed every time the container starts.
-COPY docker/entrypoint.sh /usr/bin/
-RUN chmod +x /usr/bin/entrypoint.sh
-ENTRYPOINT ["entrypoint.sh"]
