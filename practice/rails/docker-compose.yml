@@ -1,0 +1,64 @@
+version: '3'
+services:
+  mysql:
+    container_name: mysql
+    image: mysql:5.7
+    restart: always
+    volumes:
+      - ./backup/mysql:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_USER_NAME: root
+      MYSQL_PASSWORD: password
+    networks:
+      - test
+  redis:
+    container_name: redis
+    image: redis:alpine
+    ports:
+      - "6789:6379"
+    networks:
+      - test
+  worker:
+    build:
+      context: .
+    container_name: worker
+    command: sidekiq -C config/sidekiq.yml
+    volumes:
+      - ./backup/sidekiq:/app
+    networks:
+      - test
+    stdin_open: true
+    tty: true
+  app:
+    container_name: web
+    build:
+      context: .
+    volumes:
+      - .:/app
+    ports:
+      - "3000:3000"
+    command: bash -c "rm -rf ./tmp/pids && rails s -b 0.0.0.0"
+    networks:
+      - test
+    stdin_open: true
+    tty: true
+  spring:
+    container_name: spring
+    build:
+      context: .
+    volumes:
+      - .:/app
+    restart: always
+    command: spring server
+    networks:
+      - test
+    # This ensures that the pid namespace is shared between the host
+    # and the container. It's not necessary to be able to run spring
+    # commands, but it is necessary for "spring status" and "spring stop"
+    # to work properly.
+    pid: host
+
+networks:
+  test:
