@@ -1,5 +1,3 @@
-# Bich
-
 #### Mở đầu:
 
 * Nếu Dockerfile như các công thức nấu ăn thì docker-compose như là cách thức để bày những món ăn đã chế biến lên bàn ăn.
