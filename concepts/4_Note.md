@@ -1,10 +1,9 @@
-# Bich
 ## Multi-stage builds
 #### 1. Mở đầu
 
 Trên môi trường production, người ta thường cố gắng giới hạn kích thước của image xuống thấp nhất có thể.
 
-Mỗi Step của Dockerfile sẽ tạo ra 1 layer, từ đó tăng kích thước image => ta phải giảm số lượng layer đi, và cũng phải đảm bảo kích thước của nó không quá lớn. Để làm được điều này, hãy chú ý: 
+Mỗi Step của Dockerfile sẽ tạo ra 1 layer, từ đó tăng kích thước image => ta phải giảm số lượng layer đi, và cũng phải đảm bảo kích thước của nó không quá lớn. Để làm được điều này, hãy chú ý:
 
 * (1) Gộp những câu lệnh như COPY, RUN vào nếu được.
 * (2) Bỏ đi những dependencies không cần thiết khi chạy container
@@ -15,7 +14,7 @@ Ta sẽ tập trung vào ý thứ 2
 
 ###### 2.1. Vấn đề
 
-* Trong Rails project, ta cần cài yarn để chạy `rake assets:precompile` 
+* Trong Rails project, ta cần cài yarn để chạy `rake assets:precompile`
 
   Ta buộc phải cài thêm yarn, rồi chạy yarn install => sinh ra node_modules với dung lượng khổng lồ. Tuy nhiên sau đó khi up server thì ta chả cần đống đời thừa này làm gì nữa => lãng phí.
 
@@ -44,11 +43,11 @@ RUN go get -d -v golang.org/x/net/html \
 `Dockerfile`
 
 ```Dockerfile
-FROM alpine:latest  
+FROM alpine:latest
 RUN apk --no-cache add ca-certificates
 WORKDIR /root/
 COPY app .
-CMD ["./app"]  
+CMD ["./app"]
 ```
 
 `build.sh`
@@ -57,11 +56,11 @@ CMD ["./app"]
 #!/bin/sh
 echo Building alexellis2/href-counter:build
 
-docker build --build-arg https_proxy=$https_proxy --build-arg http_proxy=$http_proxy \  
+docker build --build-arg https_proxy=$https_proxy --build-arg http_proxy=$http_proxy \
     -t alexellis2/href-counter:build . -f Dockerfile.build
 
-docker container create --name extract alexellis2/href-counter:build  
-docker container cp extract:/go/src/github.com/alexellis/href-counter/app ./app  
+docker container create --name extract alexellis2/href-counter:build
+docker container cp extract:/go/src/github.com/alexellis/href-counter/app ./app
 docker container rm -f extract
 
 echo Building alexellis2/href-counter:latest
@@ -84,16 +83,16 @@ Không còn cần nhiều Dockerfile nữa, và cũng tạm biệt luôn cái `b
 # builder
 FROM golang:1.7.3 as builder
 WORKDIR /go/src/github.com/alexellis/href-counter/
-RUN go get -d -v golang.org/x/net/html  
+RUN go get -d -v golang.org/x/net/html
 COPY app.go    .
 RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o app .
 
 # main image
-FROM alpine:latest  
+FROM alpine:latest
 RUN apk --no-cache add ca-certificates
 WORKDIR /root/
 COPY --from=builder /go/src/github.com/alexellis/href-counter/app .
-CMD ["./app"]  
+CMD ["./app"]
 ```
 
 Khi build thì ta chỉ cần
@@ -112,7 +111,7 @@ COPY --from=builder /go/src/github.com/alexellis/href-counter/app .
 
 Chính nó, **FROM xyz as builder** và **COPY --from=builder** (builder chỉ là example, bạn ghi tên mình vào đó cũng được)
 
-Trong khi build image chính của ta Docker đã build thêm một image nữa, chính là phần builder ta đã khai báo. 
+Trong khi build image chính của ta Docker đã build thêm một image nữa, chính là phần builder ta đã khai báo.
 
 Sau khi build, ta có thể dùng COPY với tham số `--from=stage_name` để copy bất cứ thứ gì trong image trên. Không dừng lại ở đó, cậu lệnh này còn cho phép ta copy file từ image (đã build) ở ngoài, thậm chí là remote image.
 
@@ -132,7 +131,92 @@ Khi chạy câu lệnh trên, Docker sẽ chỉ build builder stage mà thôi, c
 
 Những ví dụ trên đều có ở trang chủ Docker, có thể xem thêm tại [đây](<https://docs.docker.com/develop/develop-images/multistage-build/>)
 
-#### 3. Ứng dụng trong Rails project (production)
+#### 3. Note
+
+* Mỗi lệnh trong dockerfile sẽ tạo ra 1 layer mới, nó sẽ làm tăng kích thước image sau khi build.
+
+* Một số lệnh có khả năng cache
+
+  * `yarn install` sử dụng `yarn.lock` và `package.json`
+  * `bundle install` sử dụng `Gemfile.lock` và `Gemfile`
+
+  Ta nên copy những file này vào image trước khi những lệnh này, nó sẽ sử dụng cache thay vi cài đặt lại từ đầu, build 1 layer mới (và những layer sau cũng tạch nốt)
+
+  ```Dockerfile
+  COPY Gemfile* ./
+  RUN bundle
+  ```
+
+* Nên gộp những lệnh RUN lại với nhau:
+
+  * VD khi cài nodejs + yarn:
+
+    ```Dockerfile
+    RUN curl -sL https://deb.nodesource.com/setup_10.x | bash - && \
+      curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
+      echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list && \
+      apt-get update && \
+      apt-get install -y build-essential mysql-client libv8-dev nodejs yarn
+    ```
+
+* Gộp lệnh COPY nếu có thể
+
+  ```Dockerfile
+  COPY Gemfile* ./
+  ```
+
+  thay vì
+
+  ```Dockerfile
+  COPY Gemfile .
+  COPY Gemfile.lock .
+  ```
+
+* Chỉ nên viết những lệnh cần thiết để khởi tạo môi trường, một số lệnh không liên quan hoặc có thể bị replace bởi volumes thì không nên viết trong Dockerfile
+
+  * Nếu chạy `yarn install` trong quá trình build, mà sau đó ta lại mount thư mục hiện tại vào trong container, thì node_modules sau khi chạy yarn install sẽ bị replace ngay và luôn => mất => vô dụng
+
+  * Nên tránh cách viết như sau vì nó chả liên qua gì đến quá trình build cả.
+
+    Dưới đây là Dockerfile trong 1 dự án của 1 công ty có doanh thu nghìn tỷ yên.
+
+    ```shell
+    RUN if [ "$LOCAL_MACHINE" != "true" ]; then bundle exec rake db:create && bundle exec rake db:migrate ; fi
+    ADD package.json /package.json
+    RUN yarn install
+    ```
+
+    Và can lộ lộ hết cả bí mật quốc gia
+
+    ```Dockerfile
+    ARG SECRET_KEY_BASE
+    ARG MYSQL_DB_NAME
+    ARG MYSQL_ROOT_PASSWORD
+
+    ENV SECRET_KEY_BASE=$SECRET_KEY_BASE
+    ENV MYSQL_DB_NAME=$MYSQL_DB_NAME
+    ENV MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD
+    ```
+
+  * Thay vì vậy hãy viết vào file shell ở ngoài, rồi sử dụng CMD, và tách riêng dockerfile cho dev/production ra.
+
+    ```
+    # Dockerfile
+    CMD ["start.sh"]
+    ```
+
+    ```shell
+    # start.sh
+    yarn install
+    rm -rf tmp/pids
+    rails s
+    ```
+
+    Nếu viết như trên, khi container start, nó sẽ chạy `yarn install` sinh ra thư mục `node_modules`, sau đó sẽ được mount ra host, chứ không bị replace nữa.
+
+* Nhớ sử dụng EXPOSE, mặc dù không viết thì nó vẫn chạy như thường.
+
+#### 4. Ứng dụng trong Rails project (production)
 
 `Dockerfile`
 
@@ -286,7 +370,7 @@ services:
     volumes:
       - ./emres-front:/usr/src/app
     restart: unless-stopped
-    
+
   server:
     build:
       context: .
@@ -301,7 +385,7 @@ services:
     restart: unless-stopped
     depends_on:
       - db
-      
+
   db:
     image: postgres
     env_file:
@@ -337,7 +421,7 @@ Vì Docker mặc định cho ta `ENTRYPOINT ["/bin/sh", "-c"]`. Và câu lệnh 
 
 #### ENTRYPOINT VS CMD
 
-* `ENTRYPOINT`: 
+* `ENTRYPOINT`:
   * Là command chạy mỗi khi container start
   * Required, mặc định là `/bin/sh -c`
 * `CMD`:
@@ -382,8 +466,6 @@ Trước đây, `LINK` dùng để liên kết các container, từ đó, contai
 Dễ dàng thấy nó là `NETWORK + DEPENTS_ON`
 
 Một note nhỏ là `depends_on` không chờ cho container khác *ready to work* mà nó chỉ chờ bật lên mà thôi, `depends_on` bị ignore khi dùng swarm mode.
-
-# Hoan
 
 ### Makefile
 
