@@ -1,4 +1,4 @@
-#### 1. Những lệnh quan trọng
+# 1. Những lệnh quan trọng
 
 * FROM <image>
   * sử dụng 1 image có sẵn làm base (môi trường)
@@ -31,7 +31,7 @@
   * Tham số truyền để build khi chạy `docker run --build-arg`
   * VD khi ta truyền RAILS_MASTER_KEY vào để compile assets file, ta nên dùng lệnh này, vì nó sẽ không lưu lại trong image.
 
-#### 2. Một vài lệnh khác
+# 2. Một vài lệnh khác
 
 * VOLUME:
 
@@ -52,7 +52,7 @@
 
 * Những lệnh này thường hay dùng trong docker-compose thay vì viết trong dockerfile
 
-#### 3. Khi nào cần build lại image?
+# 3. Khi nào cần build lại image?
 
 * Khi hệ thống - nội tại image cần có sự thay đổi
 
@@ -67,9 +67,9 @@
 
   Ở môi trường dev, ta thường có config volumes: .:/path/to/app, vì vậy khi chạy những lệnh trên, nó sẽ trực tiếp mount luôn ra ngoài host, những lần chạy service sau đó, nó cứ lấy thư mục gem kia mount vào container và chạy ầm ầm thôi.
 
-#### 4. Hướng dẫn dử dụng Dockerfile cơ bản
+# 4. Hướng dẫn dử dụng Dockerfile cơ bản
 
-+ Xem source code ở thư mục: [source_code/dockerfile/](https://github.com/longnv-0623/Div1_Docker_Course/tree/refactor/master/dockerfile)
++ Xem source code ở thư mục: [source_code/dockerfile/](https://github.com/longnv-0623/Div1_Docker_Course/tree/master/source_code/dockerfile)
 
 + Build docker image từ Dockerfile, ta sử dụng câu lệnh sau:
 
@@ -103,10 +103,14 @@
 
   ![](https://user-images.githubusercontent.com/18675907/59087541-23498600-892f-11e9-9caf-9b56da755f51.png)
 
-#### 5. Cơ chế build image qua layers
+# 5. Cơ chế build image qua layers
 
 + Docker image được xây dựng dựa trên các layers xếp chồng, giống như việc bạn xếp nhiều viên gạch chồng lên nhau vậy.
 
 + Nếu câu lệnh trước đó đã được thực thi và tạo layer thì Docker sẽ sử dụng layer cũ đó chứ không tạo layer mới nữa, giúp giảm thời gian build image và nếu ở một layer có sự thay đổi thì kể từ layer đó trở về sau, tất cả sẽ được build lại.
 
 + Khi pull image cũng tương tự như khi chúng ta build image vậy, từng layer được xây dựng theo mô hình cha con, sinh sau đẻ muộn hơn thì là layer con, kế thừa từ layer cha, tất cả đều được đặt tên là <none>, đến layer cuối cùng thì mới đầy đủ image của chúng ta và đặt tên chính xác.
+
+# 6. Docker Hub
+
++ Docker hub là nơi lưu giữ và chia sẻ các file images (hiện có khoảng 300.000 images)
