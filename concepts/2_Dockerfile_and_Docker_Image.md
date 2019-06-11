@@ -110,7 +110,3 @@
 + Nếu câu lệnh trước đó đã được thực thi và tạo layer thì Docker sẽ sử dụng layer cũ đó chứ không tạo layer mới nữa, giúp giảm thời gian build image và nếu ở một layer có sự thay đổi thì kể từ layer đó trở về sau, tất cả sẽ được build lại.
 
 + Khi pull image cũng tương tự như khi chúng ta build image vậy, từng layer được xây dựng theo mô hình cha con, sinh sau đẻ muộn hơn thì là layer con, kế thừa từ layer cha, tất cả đều được đặt tên là <none>, đến layer cuối cùng thì mới đầy đủ image của chúng ta và đặt tên chính xác.
-
-## 6. Docker Hub
-
-+ Docker hub là nơi lưu giữ và chia sẻ các file images (hiện có khoảng 300.000 images)
