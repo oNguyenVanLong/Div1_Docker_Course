@@ -1,4 +1,4 @@
-# 1. Lý thuyết
+## 1. Lý thuyết
 
 ![](https://camo.githubusercontent.com/957fbc8b45fc596089690cb9186100224b270e97/68747470733a2f2f696d616765732e7669626c6f2e617369612f37353164373531322d633965372d343461352d626535362d3662316666393039366164662e706e67)
 
@@ -12,7 +12,7 @@
 
 - Những instance này tất nhiên sẽ có những dữ liệu mà image có, tuy nhiên khi chạy, chúng sinh ra dữ liệu mới (thay đổi state) thì hoàn toàn độc lập, không liên quan gì với nhau nữa.
 
-# 2. Câu lệnh
+## 2. Câu lệnh
 
 - Run một image:
 
@@ -57,7 +57,7 @@
 
   Tham khảo từ https://stackoverflow.com/a/23667302
 
-# 3. Thực hành
+## 3. Thực hành
 
 + Tiếp tục xem source code ở thư mục: [source_code/dockerfile/](https://github.com/longnv-0623/Div1_Docker_Course/tree/master/source_code/dockerfile)
 
