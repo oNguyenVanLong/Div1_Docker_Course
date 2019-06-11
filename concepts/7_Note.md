@@ -48,7 +48,7 @@
   COPY Gemfile.lock .
   ```
 
-## 1.2 Bỏ dependencies không cần thiết
+### 1.2 Bỏ dependencies không cần thiết
 
 ###### Vấn đề
 
@@ -250,7 +250,7 @@
         restart: unless-stopped
     ```
 
-# 2. Tăng tính bảo mật
+## 2. Tăng tính bảo mật
 
 + Chỉ nên viết những lệnh cần thiết để khởi tạo môi trường, một số lệnh không liên quan hoặc có thể bị replace bởi volumes thì không nên viết trong Dockerfile
 
@@ -296,7 +296,7 @@
 
 * Nhớ sử dụng EXPOSE, mặc dù không viết thì nó vẫn chạy như thường.
 
-# 3. CMD vs ENTRYPOINT
+## 3. CMD vs ENTRYPOINT
 
 #### Mở đầu
 
@@ -359,7 +359,7 @@ Lưu ý nữa là khi dùng `ENTRYPOINT` theo shell form, `CMD` và command củ
 
 Ngoài ra, nó còn có liên quan đến shell processing, signal processing, khá là hại não, mọi người có thể dựa vào những keyword này để tìm hiểu thêm.
 
-# 4. So sánh LINK và DEPENDS_ON
+## 4. So sánh LINK và DEPENDS_ON
 
 Hiện tại `LINK` đã bị deprecated, không nên dùng nó nữa.
 
@@ -369,7 +369,7 @@ Dễ dàng thấy nó là `NETWORK + DEPENTS_ON`
 
 Một note nhỏ là `depends_on` không chờ cho container khác *ready to work* mà nó chỉ chờ bật lên mà thôi, `depends_on` bị ignore khi dùng swarm mode.
 
-# 5. Makefile
+## 5. Makefile
 
 + Phải công nhận là gõ những dòng docker-compose up -d ... nhiều như vậy thật là mệt, vậy thì hãy dùng Makefile
 
@@ -403,7 +403,7 @@ dev:
 + Mà bản thân họ không cần phải có quá nhiều kiến thức về Docker, khá là tiện lợi phải không ^_^
 
 
-# 6. Xóa dangling images
+## 6. Xóa dangling images
 
 + Dòng ---> Using cache xuất hiện mỗi khi bạn build image chính là tái sử dụng các layers. Những layers mà không được tái sử dụng nữa được gọi là dangling images, tạm dịch là những image lơ lửng -> nó không trỏ tới images nào cả.
 
@@ -414,9 +414,9 @@ dev:
   ```
 
 
-# 7. For rails project
+## 7. For rails project
 
-## 7.1 Ứng dụng trong Rails project (production)
+### 7.1 Ứng dụng trong Rails project (production)
 
   `Dockerfile`
 
@@ -515,7 +515,7 @@ dev:
 + Builder của ta thực hiện nhiệm vụ chạy `rake assets:precompile`, nó sẽ cần cài yarn, đồng thời khi chạy câu lệnh trên còn sinh ra thêm 1 đống `node_modules` nữa, ta đã tiết kiệm được kha khá dung lượng của image production.
 
 
-## 7.2 Preload for rals project với spring
+### 7.2 Preload for rals project với spring
 
 + From [this](https://github.com/jonleighton/spring-docker-example) example
 

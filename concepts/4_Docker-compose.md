@@ -1,4 +1,4 @@
-# 1. Giải pháp
+## 1. Giải pháp
 
 Ứng dụng Docker trong dự án như thế nào ?
 
@@ -22,9 +22,9 @@
     ```
 + Nếu Dockerfile như các công thức nấu ăn thì docker-compose như là cách thức để bày những món ăn đã chế biến lên bàn ăn.
 
-# 2. Viết docker-compose
+## 2. Viết docker-compose
 
-## 2.1 Khai báo service
+### 2.1 Khai báo service
 
 + Cấu trúc
 
@@ -122,7 +122,7 @@
 
 
 
-# 3. Ví dụ
+## 3. Ví dụ
 
 + Dưới đây là docker-compose của 1 dự án web nhỏ, bật 3 terminal để chạy
 
@@ -204,78 +204,45 @@
         - ./utils:/usr/src/app/utils
   ```
 
-# 4. Cách sử dụng
+## 4. Cách sử dụng
 
+####Lý thuyết
 
-###### docker-compose build
+  + docker-compose build
 
-  + Dùng để build những image được định nghĩa trong docker-compose.yml
+    + Dùng để build những image được định nghĩa trong docker-compose.yml
 
-  + Khi khai báo service tất cả những key ngoài `build` ra thì những thứ còn tại đều vô dụng trong Dockerfile
+    + Khi khai báo service tất cả những key ngoài `build` ra thì những thứ còn tại đều vô dụng trong Dockerfile
 
-  + Chả khác gì so với `docker build`. Tuy nhiên tiết kiệm thời gian rất nhiều.
+    + Chả khác gì so với `docker build`. Tuy nhiên tiết kiệm thời gian rất nhiều.
 
-###### docker-compose up
+  + docker-compose up
 
-  + Tiến hành run service
-  + Có thể chạy background với tham số -d
-  + Khi chạy ngầm, phải dùng `docker-compose logs` để xem log của service.
-  + Ngay cả khi chưa chạy lệnh build, khi up, docker vẫn sẽ build cho ta hoặc pull image về, tạo volume cần thiết, rồi mới up service
-  + Mặc định docker sẽ tạo cho ta 1 network nếu ta không khai báo network, tất cả các service đều có thể nhìn thấy nhau.
+    + Tiến hành run service
+    + Có thể chạy background với tham số -d
+    + Khi chạy ngầm, phải dùng `docker-compose logs` để xem log của service.
+    + Ngay cả khi chưa chạy lệnh build, khi up, docker vẫn sẽ build cho ta hoặc pull image về, tạo volume cần thiết, rồi mới up service
+    + Mặc định docker sẽ tạo cho ta 1 network nếu ta không khai báo network, tất cả các service đều có thể nhìn thấy nhau.
 
-###### docker-compose down
+  + docker-compose down
 
-  + Stop và remove container
+    + Stop và remove container
 
-  + Volume không bị xóa, có thể remove đi bằng cách thêm tham số -v
+    + Volume không bị xóa, có thể remove đi bằng cách thêm tham số -v
 
-###### docker-compose logs
+  + docker-compose logs
 
-  + Xem log service
+    + Xem log service
+
+####Thực hành
+
++ [Docker_for_Laravel](https://github.com/longnv-0623/Div1_Docker_Course/blob/master/concepts/5_Docker_Laravel.md)
+
++ [Docker_for_Ruby_On_Rails](https://github.com/longnv-0623/Div1_Docker_Course/blob/master/concepts/5_Docker_Rails.md)
+
 
 ###### Note
 
   + Mặc định khi chạy lệnh docker-compose, những biến trong file .env sẽ có thể truy cập trong file docker-compose, nhưng với Dockerfile thì không.
   + Để có thể dùng trong Dockerfile của service, ta cần khai báo thêm args.
   + Bản chất là wrapper của docker CLI
-
-# 5. Ứng dụng Docker trong framework
-
-## 5.1 Laravel
-
-  + Updating ...
-
-## 5.2 Ruby On Rails
-
-+ Source code
-
-  + Một rails project thông thường thì chúng ta cần define những services như: app, db, worker, redis,...
-  + Mọi người có thể tham khảo tại [source_code/rails/](https://github.com/longnv-0623/Div1_Docker_Course/tree/master/source_code/rails)
-
-+ Để  speed up app thì chúng ta sẽ
-
-  + Khởi động container `mysql`, `redis`, `worker` ngay từ đầu bằng việc chạy daemon:
-    ``` bash
-    docker-compose up -d mysql redis worker
-    ```
-
-  + Chạy rails app bằng lệnh sau:
-    ```bash
-    docker-compose run --rm --service-ports app
-    ```
-##### Note
-  + Chúng ta có thể bỏ option `networks` trong file `docker-compose.yml` nếu chúng ta không cần config gì khác như `ip`, `subnet`,... (dùng luôn default network khi start container).
-  + Nếu không có nhu cầu access vào database từ host machine thì cũng không cần bind `port` ra :smile: Cụ thể là ở trong service `mysql` chúng ta có thể bỏ options `ports`.
-  + Một số file `docker-compose.yml` dùng `links` thay vì `depends_on` thì thay vì dùng short-hand syntax như:
-    ```yaml
-    web:
-      links:
-      - db
-    ```
-  + Chúng ta nên dùng `<tên service>:<service alias>` để dễ dàng cho việc maintain
-    ```yaml
-    web:
-      links:
-      - mysql:db
-    ```
-  + Khi làm việc với `cron jobs` chúng ta cần chú ý tới việc setting timezone cho container. Chúng ta có thể setting cho chúng thông qua `Dockerfile` hoặc biến env khi chạy container.

@@ -1,4 +1,4 @@
-# 1. Bài toán
+## 1. Bài toán
 
 **Bài toán 1:**
 
@@ -21,13 +21,13 @@
 -> Sau đây, chúng ta sẽ điểm qua một vài công nghệ đã được sinh ra để giải quyết những vấn đề trên.
 
 
-# 2. Ảo hóa
+## 2. Ảo hóa
 
   + Để giải quyết bài toán 1 thì chúng ta có thể nghĩ đến ảo hoá. Một cách dễ hiểu nhất thì đây là giải pháp khi ta chỉ có một bộ máy tính đang cài windows nhưng muốn có thêm MacOS hay Ubuntu để code. Nhưng thưc ra ưu điểm của nó còn khá nhiều.
 
   + Các công nghệ máy ảo VM ra đời, được chia làm 2 mảng chính:  Hypervisor với Containerization
 
-# 2. Công nghệ Hypervisor
+## 2. Công nghệ Hypervisor
 
 + `Hypervisor` là ảo hỏa nằm ở tầng Hardware (phần cứng), tức là mô phỏng phần cứng và chạy những OS con trên phần cứng đó. Ví dụ điển hình là Virtual Box, VMware, BlueStack..v..v
 
@@ -37,17 +37,17 @@
 
 + Hơn nữa, khi sử dụng Virtual Box để cài đặt máy ảo thì chúng ta cần phân phát ngay từ đầu một lượng tài nguyên nhất định cho máy ảo. Nếu như máy ảo đó chưa sử dụng hết thì cũng không tái sử dụng được, đó là một sự lãng phí.
 
-# 3. Công nghệ Containerization
+## 3. Công nghệ Containerization
 
   Ở bước tiếp theo, ra đời công nghệ `Containerization`
 
   + Đây là công nghệ ảo hóa nằm ở tầng Operation System (hệ điều hành). Ví dụ đơn giản là máy bạn đã cài một OS, sau đó phần ảo hoá sẽ được cài như 1 ứng dụng chạy trong OS đó.
 
-## Hoạt động như thế nào
+### Hoạt động như thế nào
 
   + Thay vì phân chia tài nguyên rạch ròi như công nghệ Hypervisor thì tất cả các máy ảo sẽ dùng chung tài nguyên với máy mẹ. Khi nào máy ảo cần tài nguyên thì cung cấp, cần bao nhiêu thì cấp bấy nhiêu. Như vậy sẽ tránh lãng phí.
 
-## Container là gì?
+### Container là gì?
   + Hơn nữa, khi đó hệ thống sẽ được đóng gói thành các contaner.
   + Mỗi một container là một máy ảo.
   + Cũng có thể  ví von mỗi một container là một chiếc thùng, và chiếc thùng đó:
@@ -62,7 +62,7 @@
   + Công nghệ này cũng được ông lớn Google sử dụng rộng rãi
   ![](https://user-images.githubusercontent.com/49421807/59021343-d3f34f00-8875-11e9-92e4-4d86fbb3116a.png)
 
-## So sánh
+### So sánh
 
   |   |Containerization|Hypervisor|
   |---|---------|----------|
@@ -71,9 +71,9 @@
   |Giao diện sử dụng|Khó tiếp cận hơn|Đơn giản trực quan|
   |Khả năng scale| Ez | Ko rõ |
 
-# 4. Giới thiệu về Docker
+## 4. Giới thiệu về Docker
 
-## Lịch sử hình thành
+### Lịch sử hình thành
   + Công nghệ ảo hóa (vitualization) thì ta có thể dùng công cụ Vitualbox hay VMware thế còn đối với containerlization thì dùng gì đây ? Google họ dùng gì ?
 
   + Oh mình không biết được, mỗi một ông lớn có một cách để áp dụng công nghệ này và họ private source code.
@@ -87,7 +87,7 @@
 
   + Docker Containers có một API cho phép quản trị các container từ bên ngoài. Giúp cho chúng ta có thể dễ dàng quản lí, thay đổi, chỉnh sửa các container.
 
-## Các khái niệm
+### Các khái niệm
 
   ![](https://camo.githubusercontent.com/957fbc8b45fc596089690cb9186100224b270e97/68747470733a2f2f696d616765732e7669626c6f2e617369612f37353164373531322d633965372d343461352d626535362d3662316666393039366164662e706e67)
 
@@ -119,7 +119,7 @@
 
   + `Docker Cloud:` là hệ thống Paas cho phép bạn dễ dàng triển khai các app của mình lên môi trường cloud.
 
-## Docker system gồm những thành phần nào ?
+### Docker system gồm những thành phần nào ?
 
 + Docker sử dụng kiến trúc client-server. Docker client sẽ liên lạc với các Docker daemon, các Docker daemon sẽ thực hiện các tác vụ build, run và distribuing các Docker container.  Cả Docker client và Docker daemon có thể chạy trên cùng 1 máy, hoặc có thể kết nối theo kiểu Docker client điều khiển các docker daemon giao tiếp với nhau thông qua socket hoặc RESTful API.
 
@@ -139,7 +139,7 @@
 
   Docker container có nét giống với các directory. Một Docker container giữ mọi thứ chúng ta cần để chạy một app. Mỗi container được tạo từ Docker image. Docker container có thể có các trạng thái run, started, stopped, moved và deleted.
 
-## 5. Hoạt động của Docker ra sao ?
+### 5. Hoạt động của Docker ra sao ?
 
 Một hệ thống Docker được thực thi với 3 bước chính :
 
