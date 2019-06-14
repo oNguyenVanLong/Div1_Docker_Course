@@ -1,3 +1,6 @@
+![](https://www.threatstack.com/wp-content/uploads/2017/06/docker-cloud-twitter-card.png)
+
+
 ## 1. Bài toán
 
 **Bài toán 1:**
@@ -29,27 +32,32 @@
     + Hypervisor (Virtualbox, Vmware, BlueStack..v..v)
     + Containerization (**Docker**, incognito_1, incognito_2, ...)
 
-  **Mục đích của chia sẻ:**
+  **Target của khóa chia sẻ:**
     -> Nguồn gốc
     -> Công dụng
     -> Cách vận hành
   **Tránh mông lung khi nhắc tới `Docker`**
 
-## 2. Công nghệ Hypervisor
+  > Chưa biết gì đến biết dùng
+
+## 3. Công nghệ Hypervisor
 
 + `Hypervisor` là công nghệ ảo hóa ở tầng Hardware (phần cứng)
 + Tư tưởng:
-  + Cấp cho 4 GB RAM, 10 GB disk,...
+  + Cấp 4 GB RAM, 10 GB disk, % CPU ...
   + Dùng tài nguyên trên để cài đặt OS (Operation System )
   ![](https://user-images.githubusercontent.com/49421807/59420465-23e29080-8df7-11e9-9188-390eda275f98.png)
++ Ưu điểm:
+  + Giải quyết được bài toán 1.
+  + Có GUI, trực quan, dễ sử dụng.
 + Nhược điểm:
   + Lãng phí tài nguyên nếu không sử dụng hết.
   + Thời gian khởi động lớn.
   + Vẫn chưa giải quyết được bài toán 2.
 
-## 3. Công nghệ Containerization
+## 4. Công nghệ Containerization
 
-  + `Containerization` là công nghệ ảo hóa ở tầng OS.
+  + `Containerization` là công nghệ ảo hóa ở tầng OS(hệ điều hành).
   + Tư tưởng:
     + Cài đặt máy ảo trên máy thật.
     + Dùng chung tài nguyên với máy thật (cần bao nhiêu, cấp bấy nhiêu, dùng xong trả lại).
@@ -65,36 +73,54 @@
 
   + Ưu điểm:
     + Giải quyết cả 2 bài toán
-    + Nhanh, gọn, nhẹ
-  + Khuyêt điểm:
-    + Khó áp dụng hơn.
-    + Nếu tầng kernel bị hack thì sẽ ảnh hưởng toàn bộ.
+    + Nhanh, gọn, nhẹ, giảm chi phí cơ sở hạ tầng.
+  + Khuyết điểm:
+    + Khó áp dụng, khó học hơn.
+    + Nếu tầng kernel bị hack thì sẽ ảnh hưởng toàn bộ Container.
   + Độ tin cậy:
-    + Google, Amazon,..v..v sử dụng rộng rãi.
+    + Google, [Amazon](https://aws.amazon.com/vi/docker/),..v..v sử dụng rộng rãi.
   ![](https://user-images.githubusercontent.com/49421807/59021343-d3f34f00-8875-11e9-92e4-4d86fbb3116a.png)
 
 ## 4. Giới thiệu về Docker
 
 ### Lịch sử hình thành
 
-  + Các `ông lớn` dùng phần mềm gì để ứng dụng công nghệ này:
-    + Google
+  + Các `ông lớn` dùng phần mềm gì để ứng dụng công nghệ `containerization`:
+    + `Google`
       + Private source code.
-    + Amazon
+    + `Amazon`
       + Private source code.
-    + Docker (company name)
-      + Docker (software name) - open source.
-      ![](https://camo.githubusercontent.com/e93591edba8c651f251d3b24717097d77d705c34/68747470733a2f2f7669626c6f2e617369612f75706c6f6164732f35623162623362342d663362382d343138332d383533612d6431316630663461343939372e706e67)
-  + Docker là:
-    + Một phần mềm,
-    + Xây dựng ra môi trường ảo hóa,
-    + Trên công nghệ containerization,
-    + Bằng cách tạo ra các container.
+    + [Docker Inc](https://www.docker.com/company) [(Wikipedia)](https://en.wikipedia.org/wiki/Docker,_Inc.)
+      + Docker is the leader in the containerization market,...
+    [<img src="https://user-images.githubusercontent.com/49421807/59482172-fa2a7780-8e91-11e9-9324-216e85b2c878.png">](https://www.docker.com/why-docker)
+      + [Products](https://www.docker.com/products)
+        + Offerings
+          + [Docker Community Edition](https://docs.docker.com/install/)
+          + [Docker Enterprise](https://docs.docker.com/ee/supported-platforms/)
+          + [Docker Hub](https://hub.docker.com)
+        + Technologies
+          ![](https://user-images.githubusercontent.com/49421807/59489623-e3454e80-8eac-11e9-80fe-7a3ed9102f27.png)
+      + [Customers](https://www.docker.com/customers)
+        + [Visa:](https://www.docker.com/customers/visa) Visa Achieves a 10x Increase in Scalability with Docker Enterprise
+        + [PayPal:](https://www.docker.com/customers/paypal) PayPal Manages 200,000 Containers in the Cloud to Speed Transactions
+        ![](https://camo.githubusercontent.com/e93591edba8c651f251d3b24717097d77d705c34/68747470733a2f2f7669626c6f2e617369612f75706c6f6164732f35623162623362342d663362382d343138332d383533612d6431316630663461343939372e706e67)
 
+  + `Docker` là:
+    + Nền tảng phần mềm,
+    + Xây dựng môi trường ảo hóa,
+    + Trên công nghệ containerization.
 
-### Các khái niệm:
+  + `Docker` giúp:
+    + Đóng gói,
+    + Triển khai
 
-  ![](https://camo.githubusercontent.com/957fbc8b45fc596089690cb9186100224b270e97/68747470733a2f2f696d616765732e7669626c6f2e617369612f37353164373531322d633965372d343461352d626535362d3662316666393039366164662e706e67)
+    ứng dụng một cách nhanh chóng.
+
+  **Docker mà trước nay, mọi người đang sử dụng cho dự án nhỏ của mình là Docker Community Edition - một phần nhỏ trong hệ sinh thái Docker.**
+
+### [Các khái niệm:](https://docs.docker.com)
+
+![](https://camo.githubusercontent.com/957fbc8b45fc596089690cb9186100224b270e97/68747470733a2f2f696d616765732e7669626c6f2e617369612f37353164373531322d633965372d343461352d626535362d3662316666393039366164662e706e67)
 
 + **Basic:**
   + `Docker Image:`
