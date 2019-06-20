@@ -31,7 +31,7 @@
   + Tránh mông lung khi nhắc tới `Docker`
 
 #### Scope
-  + Docker in Linux
+  + Docker on Linux
   + **Chưa biết gì đến biết dùng**
 
 #### Contributions
