@@ -126,7 +126,7 @@
     + được cách ly an toàn trong container,
     + đóng gói với tất cả `dependencies` and `libraries`.
 
-  **Docker mà trước nay, mọi người đang sử dụng cho dự án nhỏ của mình là Docker Community Edition - một phần nhỏ trong hệ sinh thái Docker.**
+  **Docker mà trước nay, mọi người đang sử dụng cho dự án nhỏ của mình là Docker Community Edition - một phần trong hệ sinh thái Docker.**
 
 ### [Các khái niệm:](https://docs.docker.com)
 
@@ -143,7 +143,7 @@
 
   + [Dockerfile:](https://docs.docker.com/engine/reference/builder/)
     + Một file dạng text.
-    + Không có đuôi.
+    + Không có đuôi. Tại sao ?
     + Tập hợp các lệnh.
     + Hướng dẫn Docker tạo image.
 
