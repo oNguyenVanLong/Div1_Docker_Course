@@ -6,6 +6,7 @@
 
   + (1) Gộp những câu lệnh như COPY, RUN vào nếu được.
   + (2) Bỏ đi những dependencies không cần thiết khi chạy container
+  + (3) Giảm dung lượng image -> image alpine
 
 ### 1.1 Gộp câu lệnh
 
