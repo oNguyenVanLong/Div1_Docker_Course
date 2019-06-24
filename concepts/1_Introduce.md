@@ -5,11 +5,11 @@
 
 **Bài toán 1:**
 
-  + project_1 của bạn đã được cài và đang hoạt động ổn định trên máy.
+  + project_1 của bạn `đã được cài` và đang hoạt động ổn định trên máy.
 
-  + project_2 chuẩn bị được cài đặt.
+  + project_2 `chuẩn bị` được cài đặt.
 
-  -> Việc cài đặt thêm các software, package dễ ảnh hưởng tới những chương trình đang chạy.
+  -> Việc `cài đặt thêm` các software, package dễ ảnh hưởng tới những chương trình đang chạy.
 
 **Bài toán 2:**
 
@@ -22,11 +22,11 @@
     + Sidekiq ...
   cùng với version, package đi kèm ...
 
--> Việc cài đặt, cấu hình phức tạp.
+-> Việc cài đặt, cấu hình `phức tạp`.
 
 ## 2. Phương pháp ảo hóa
 
-  + Tạo ra máy ảo && đặt dự án chạy bên trong máy ảo đó.
+  + Tạo ra `máy ảo` && đặt dự án `chạy bên trong` máy ảo đó.
   ![](https://user-images.githubusercontent.com/49421807/59422554-c6504300-8dfa-11e9-8969-712e254d9952.png)
   + Các công nghệ máy ảo ra đời:
     + Hypervisor (Virtualbox, Vmware, BlueStack..v..v)
@@ -34,7 +34,7 @@
 
 ## 3. Công nghệ Hypervisor
 
-+ `Hypervisor` là công nghệ ảo hóa ở tầng Hardware (phần cứng)
++ `Hypervisor` là công nghệ ảo hóa ở `tầng Hardware` (phần cứng)
 + Tư tưởng:
   + Cấp 4 GB RAM, 10 GB disk, % CPU ...
   + Dùng tài nguyên trên để cài đặt OS (Operation System )
@@ -51,8 +51,8 @@
 
   + `Containerization` là công nghệ ảo hóa ở tầng OS(hệ điều hành).
   + Tư tưởng:
-    + Cài đặt máy ảo trên máy thật.
-    + Dùng chung tài nguyên với máy thật (share kernel với nhau).
+    + Cài đặt `máy ảo` trên `máy thật`.
+    + `Dùng chung` tài nguyên với máy thật (share kernel với nhau).
     + Cần bao nhiêu, cấp bấy nhiêu, dùng xong thì giải phóng.
     ![](https://user-images.githubusercontent.com/49421807/59420970-05c96000-8df8-11e9-829f-58bda1ca642c.png)
   + Nền tảng:
@@ -91,7 +91,9 @@
     + Google sử dụng rộng rãi.
   ![](https://user-images.githubusercontent.com/49421807/59021343-d3f34f00-8875-11e9-92e4-4d86fbb3116a.png)
 
-## 4. Giới thiệu về Docker
+## 5. Giới thiệu về Docker
+
+### 5.1 Docker Inc
 
   + Các `ông lớn` dùng phần mềm gì để ứng dụng công nghệ `containerization`:
     + `Google`, ...
@@ -128,7 +130,13 @@
 
   **Docker mà trước nay, mọi người đang sử dụng cho dự án nhỏ của mình là Docker Community Edition - một phần trong hệ sinh thái Docker.**
 
-### [Các khái niệm:](https://docs.docker.com)
+### 5.2 Cài đặt
+
+Tham khảo tại [trang chủ](https://docs.docker.com/install/linux/docker-ce/ubuntu)
+
+### 5.3 Các khái niệm
+
+[Docker Documentation](https://docs.docker.com)
 
 ![](https://camo.githubusercontent.com/957fbc8b45fc596089690cb9186100224b270e97/68747470733a2f2f696d616765732e7669626c6f2e617369612f37353164373531322d633965372d343461352d626535362d3662316666393039366164662e706e67)
 

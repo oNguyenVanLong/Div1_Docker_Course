@@ -72,11 +72,11 @@
 
   + Ví dụ vào thư mục dự án ở máy thật:
     ```
-    sudo docker run -v ~/GitRepo/Div1_Docker_Course/source_code/dockerfile/webroot:/var/www/html -p 9000:80 -it ubuntu_nginx /bin/bash
+    sudo docker run -v ~/GitRepo/Div1_Docker_Course/source_code/dockerfile/web_root:/var/www/html -p 9000:80 -it ubuntu_nginx /bin/bash
     ```
 
     Thay thế
-    ```~/GitRepo/Div1_Docker_Course/source_code/dockerfile/webroot```
+    ```~/GitRepo/Div1_Docker_Course/source_code/dockerfile/web_root```
     cho đúng với trên máy bạn nhé !
 
     ![](https://camo.githubusercontent.com/77244822b9ada2bc0b66b552c65a085075e00972/68747470733a2f2f696d616765732e7669626c6f2e617369612f30386435386566652d386434352d346335662d616138372d6135396237653936666638302e706e67)

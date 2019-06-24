@@ -1,9 +1,6 @@
-## 1. Cài đặt Docker
+![](https://user-images.githubusercontent.com/49421807/60164694-3c579f80-9828-11e9-83df-a1947b97ecdc.png)
 
-Tham khảo tại [trang chủ](https://docs.docker.com/install/linux/docker-ce/ubuntu/)
-
-## 2. Dockerfile
-https://viblo.asia/p/5-dieu-can-chu-y-khi-viet-dockerfile-djeZ1VnolWz
+## 1. Dockerfile là gì ?
 
 ![](https://camo.githubusercontent.com/957fbc8b45fc596089690cb9186100224b270e97/68747470733a2f2f696d616765732e7669626c6f2e617369612f37353164373531322d633965372d343461352d626535362d3662316666393039366164662e706e67)
 
@@ -13,43 +10,39 @@ https://viblo.asia/p/5-dieu-can-chu-y-khi-viet-dockerfile-djeZ1VnolWz
     + Tập hợp các lệnh.
     + Hướng dẫn Docker tạo image.
 
--> `Dockerfile` sẽ quy định `Docker image` được khởi tạo từ đâu, gồm những gì trong đó.
+## 2. Tư tưởng của Dockerfile
 
-### 2.1 Tư tưởng
-
-  + Lấy image có sẵn.
-  + Cài đặt thêm
+  + Chọn `base image`
+  + Cài đặt `phần mềm`
   + Cấu hình
 
   ![](https://user-images.githubusercontent.com/49421807/59746865-f2a80b80-92a1-11e9-8faf-c3d56ef4feb4.png)
 
-  -> Liên tưởng tới cài lại OS (Windows, Linux)
-### 2.1 Cấu trúc
+  -> Liên tưởng tới cài lại OS
+  -> `Layers on Docker`
 
-[Demo:](https://github.com/longnv-0623/Div1_Docker_Course/tree/master/source_code/dockerfile)
+## 3. Viết Dockerfile
 
-![](https://user-images.githubusercontent.com/49421807/59744019-d2754e00-929b-11e9-836c-24eb956699dc.png)
+[Source code](https://github.com/longnv-0623/Div1_Docker_Course/tree/master/source_code/dockerfile)
+
+![](https://user-images.githubusercontent.com/49421807/60113123-4a131380-979b-11e9-9b83-d06065439113.png)
 
 + `Dockerfile` -> `Docker image` -> `Container`
 
-+ `webroot folder:` project code
++ `web_root folder:` project code
 
 + `start.sh` Khởi động service đi kèm.
 
-
-### 2.2 Viết Dockerfile
-
 **Thiết lập image gốc**
 + [FROM](https://docs.docker.com/engine/reference/builder/#from)
-  + Sử dụng 1 image có sẵn làm base (thằng cha của image này là thằng nào)
-  + Ví dụ:
-    ```
-    FROM ubuntu:16.04
-    ```
-  + Tìm image `ubuntu:16.04` ở trong máy
-  + Tự động `pull image` này về từ [DockerHub](https://hub.docker.com/_/ubuntu)
-    ![](https://user-images.githubusercontent.com/49421807/59745699-8b895780-929f-11e9-817f-2558d84e1b20.png)
-  + ubuntu: tên image, 16:04 là tên tag.
+  + Sử dụng 1 image có sẵn làm base
+  + Hoạt động:
+    + Tìm image `ubuntu:16.04` ở trong máy
+    + Tự động `pull image` này về từ [DockerHub](https://hub.docker.com/_/ubuntu)
+  + Note:
+    + ubuntu: tên image, 16:04 là tên tag.
+        ![](https://user-images.githubusercontent.com/49421807/59745699-8b895780-929f-11e9-817f-2558d84e1b20.png)
+    + Chọn [Official image](https://hub.docker.com/search?q=ubuntu&type=image)
 
 + [LABEL](https://docs.docker.com/engine/reference/builder/#label)
   + Thông tin đi kèm (Optional)
@@ -62,114 +55,133 @@ https://viblo.asia/p/5-dieu-can-chu-y-khi-viet-dockerfile-djeZ1VnolWz
 
 **Cài đặt ứng dụng**
 
-![](https://user-images.githubusercontent.com/49421807/59752762-04db7700-92ad-11e9-9c04-7126468822bb.png)
-
 + [ENV](https://docs.docker.com/engine/reference/builder/#env)
   + Khai báo biến môi trường
-  + Vẫn được lưu ngay cả sau khi build xong image
+  + Vẫn được lưu ngay cả sau khi build xong image.
     -> Tránh khai báo thông tin nhạy cảm.
-    -> `ENV DEBIAN_FRONTEND noninteractive` là một ví dụ.
 
 + [WORKDIR](https://docs.docker.com/engine/reference/builder/#workdir)
   + Thiết lập thư mục làm việc cho RUN, CMD, ENTRYPOINT, COPY và ADD
   + Hoặc khi exec vào container
 
 + [RUN](https://docs.docker.com/engine/reference/builder/#run)
-  + Thực thi bất kỳ lệnh nào trong một layer mới
-  + Kể từ trên cùng của image hiện tại và commit kết quả
-  + Sẽ được sử dụng cho bước tiếp theo trong Dockerfile.
+  + Thực thi trong một layer mới, kể từ layer mới nhất
+  + Commit kết quả và sử dụng cho bước tiếp theo.
 
 + [COPY](https://docs.docker.com/engine/reference/builder/#copy)
   + Copy file từ host sang image
   + VD:
     + Docker file: `/home/sun/app/Dockerfile`
     + WORKDIR `/usr/src/app`
-    + `COPY Gemfile+ ./`
-    -> `/home/sun/app/Dockerfile` máy thật -> `/usr/src/app` trong image
+    + `COPY library.json ./`
+    -> `/home/sun/app/library.json` (máy thật) -> `/usr/src/app/library.json` (máy ảo).
 
 + [ADD](https://docs.docker.com/engine/reference/builder/#add)
   Tương tự COPY
   + Hỗ trợ cả url
   + Hỗ trợ giải nén ...
 
+> Note
+  + `-y`: Option yes trong yes/no
+    ![](https://user-images.githubusercontent.com/49421807/59990178-62384500-966c-11e9-84ce-d90ed95dcafd.png)
+  + `set -x`: Hiển thị câu lệnh chuẩn bị chạy tới.
+    ![](https://user-images.githubusercontent.com/49421807/59752762-04db7700-92ad-11e9-9c04-7126468822bb.png)
+
 **Cấu hình**
 
-+ [EXPOSE](https://docs.docker.com/engine/reference/builder/#expose)
-  + port được expose sẽ có trong metadata khi chạy `docker ps` để người vào sau biết cổng nào mà lần.
-  + khi chạy `docker run -P` sẽ map những port được expose với port trên host (random)
-  + Không dùng lệnh này ta vẫn có thể truy cập được vào port của container.
++ [EXPOSE](https://docs.docker.com/engine/reference/builder/#expose):
+  + Thông báo cho Docker rằng container sẽ lắng nghe trên các cổng được chỉ định khi chạy
 
-+ ARG:
++ [ARG](https://docs.docker.com/engine/reference/builder/#arg):
   + Tham số truyền để build khi chạy `docker run --build-arg`
   + VD khi ta truyền RAILS_MASTER_KEY vào để compile assets file, ta nên dùng lệnh này, vì nó sẽ không lưu lại trong image.
 
-+ VOLUME:
-
++ [VOLUME](https://docs.docker.com/engine/reference/builder/#volume):
   + Khi dữ liệu container lớn, ta nên dùng volume để lưu dữ liệu thay vì writable layer
   + Nhanh hơn writable layer
 
-+ CMD:
-
++ [CMD](https://docs.docker.com/engine/reference/builder/#cmd):
   + Lệnh mặc định khi start container
 
-+ ENTRYPOINT:
-
++ [ENTRYPOINT](https://docs.docker.com/engine/reference/builder/#entrypoint):
   + Khi chạy docker run, docker exec ... container sẽ lấy ENTRYPOINT + CMD rồi chạy.
-
   + VD image ubuntu có ENTRYPOINT là /bin/bash -c
-
     Nếu ta sử dụng CMD là bash => lệnh chạy thực sự sẽ là `/bin/bash -c bash`
+  + Những lệnh này thường hay dùng trong docker-compose thay vì viết trong dockerfile
 
-+ Những lệnh này thường hay dùng trong docker-compose thay vì viết trong dockerfile
 
+## 4. Build Docker images
 
-## 2.2. Hướng dẫn dử dụng Dockerfile cơ bản
-
-+ [Source code: source_code/dockerfile](https://github.com/longnv-0623/Div1_Docker_Course/tree/master/source_code/dockerfile)
-
-+ Build docker image từ Dockerfile, ta sử dụng câu lệnh sau:
++ [Syntax](https://docs.docker.com/engine/reference/commandline/build/):
 
     ```
-    sudo docker build -t <image_name> .
+    docker build -t <image_name> .
     ```
 
    Ví dụ:
 
     ```
-    sudo docker build -t ubuntu_nginx .
+    docker build -t ubuntu_nginx .
     ```
+    ![](https://user-images.githubusercontent.com/49421807/60146675-ab1b0580-97f4-11e9-96b7-23616cc3ce4d.png)
++ Test:
 
-+ Bạn có thể dùng lệnh
-
-    ```
-    docker images
-    ```
-
-  để xem thành quả nhé !
-
-  ![](https://user-images.githubusercontent.com/18675907/59087107-f3e64980-892d-11e9-840e-0abd3fd18f07.png)
-
-+ Và
-
-  ```
-  docker inspect ubuntu_nginx
-  ```
-
-  để xem thêm thông tin.
-
-  ![](https://user-images.githubusercontent.com/18675907/59087541-23498600-892f-11e9-9caf-9b56da755f51.png)
+    + List image:
+        ```
+        docker images
+        ```
+    + Detail
+        ```
+        docker inspect ubuntu_nginx
+        ```
+        ![](https://user-images.githubusercontent.com/18675907/59087541-23498600-892f-11e9-9caf-9b56da755f51.png)
 
 ## 5. Cơ chế build image qua layers
 
-+ Docker image được xây dựng dựa trên các layers xếp chồng, giống như việc bạn xếp nhiều viên gạch chồng lên nhau vậy.
++ Layers `xếp chồng`
+  + Mô hình cha con
+  + Sinh sau đẻ muộn hơn thì là layer con
+  + Kế thừa từ layer cha
+    ![](https://user-images.githubusercontent.com/49421807/60145335-eb2bb980-97ef-11e9-9cd0-6edcf5b838df.png)
+  + Áp dụng cho cả pull và build image.
+    ![](https://user-images.githubusercontent.com/49421807/60146505-0c8ea480-97f4-11e9-993a-e887f04aa499.png)
 
-+ Nếu câu lệnh trước đó đã được thực thi và tạo layer thì Docker sẽ sử dụng layer cũ đó chứ không tạo layer mới nữa, giúp giảm thời gian build image và nếu ở một layer có sự thay đổi thì kể từ layer đó trở về sau, tất cả sẽ được build lại.
++ Cơ chế `layers caching`
+  + Tái sử dụng
+  + Giảm không gian đĩa
+  + Giảm thời gian build image
+    ![](https://user-images.githubusercontent.com/49421807/60155332-04466180-9814-11e9-9adf-dd60e300904e.png)
 
-+ Khi pull image cũng tương tự như khi chúng ta build image vậy, từng layer được xây dựng theo mô hình cha con, sinh sau đẻ muộn hơn thì là layer con, kế thừa từ layer cha, tất cả đều được đặt tên là <none>, đến layer cuối cùng thì mới đầy đủ image của chúng ta và đặt tên chính xác.
++ Dangling image.
+  + Layers không còn được sử dụng nữa.
+  + [List images](https://docs.docker.com/engine/reference/commandline/images/)
+    ```
+    docker images
+    ```
+    ![](https://user-images.githubusercontent.com/49421807/60166419-5a72cf00-982b-11e9-9be0-3f8c10f2f007.png)
 
-+ The default docker images will show all top level images, their repository and tags, and their size.
+    > The default docker images will show all top level images, their repository and tags, and their size.
+  + List dangling images
+    ```
+    docker images --filter "dangling=true"
+    ```
+    ![](https://user-images.githubusercontent.com/49421807/60166469-74acad00-982b-11e9-9423-2f2a9eee5e69.png)
+  + Delete dangling images
+    ```
+    docker rmi $(docker images -f "dangling=true" -q)
+    ```
+    ![](https://user-images.githubusercontent.com/49421807/60166547-95750280-982b-11e9-803a-a7303f2da3dc.png)
+  + Kết quả:
+    ![](https://user-images.githubusercontent.com/49421807/60166598-a887d280-982b-11e9-8e08-86ce91917b5c.png)
 
-## 3. Khi nào cần build lại image?
+  + Remove all image
+    ```
+    sudo docker rmi -f $(sudo docker images)
+    ```
+## 6. Docker Hub
+
+
+## 7. Khi nào cần build lại image?
 
 + Khi hệ thống - nội tại image cần có sự thay đổi
 
@@ -183,3 +195,18 @@ https://viblo.asia/p/5-dieu-can-chu-y-khi-viet-dockerfile-djeZ1VnolWz
   + yarn install
 
   Ở môi trường dev, ta thường có config volumes: .:/path/to/app, vì vậy khi chạy những lệnh trên, nó sẽ trực tiếp mount luôn ra ngoài host, những lần chạy service sau đó, nó cứ lấy thư mục gem kia mount vào container và chạy ầm ầm thôi.
+
+## Note
+
+Dockerfile
+Lưu mật khẩu
+Trên prod.
+VOLUME.
+Khong co work dir
+
+## 8. Practice
+
+[Create a base image](https://docs.docker.com/develop/develop-images/baseimages/)
+
+[Best practices for writing Dockerfiles
+](https://docs.docker.com/develop/develop-images/dockerfile_best-practices/)
