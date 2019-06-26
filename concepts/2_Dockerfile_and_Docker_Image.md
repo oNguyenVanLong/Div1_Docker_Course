@@ -19,6 +19,7 @@
   ![](https://user-images.githubusercontent.com/49421807/59746865-f2a80b80-92a1-11e9-8faf-c3d56ef4feb4.png)
 
   -> Liên tưởng tới cài lại OS
+
   -> `Layers on Docker`
 
 ## 3. Viết Dockerfile
@@ -180,33 +181,31 @@
     ```
 ## 6. Docker Hub
 
+  + [Registration](https://hub.docker.com/signup)
+  + Create repository
+  ![](https://user-images.githubusercontent.com/49421807/60173439-e4756480-9838-11e9-8a8e-22a74aa25152.png)
+  + Config
+  ![](https://user-images.githubusercontent.com/49421807/60174079-729e1a80-983a-11e9-9241-de380a3343d7.png)
+  + Result
+  ![](https://user-images.githubusercontent.com/49421807/60174168-ab3df400-983a-11e9-9a43-b75246cb6bb1.png)
 
 ## 7. Khi nào cần build lại image?
 
 + Khi hệ thống - nội tại image cần có sự thay đổi
-
   + cài gem mới (khi chạy bundle install)
   + cài thêm system dependencies
     + apt-get install
 
 + Khi mà hệ thống không phụ thuộc vào những thay đổi thì không cần rebuild
-
   + cài gem bằng bundle install --path vendor/bundle
   + yarn install
 
-  Ở môi trường dev, ta thường có config volumes: .:/path/to/app, vì vậy khi chạy những lệnh trên, nó sẽ trực tiếp mount luôn ra ngoài host, những lần chạy service sau đó, nó cứ lấy thư mục gem kia mount vào container và chạy ầm ầm thôi.
-
-## Note
-
-Dockerfile
-Lưu mật khẩu
-Trên prod.
-VOLUME.
-Khong co work dir
++ Ở môi trường dev:
+  + Ta thường có config volumes: .:/path/to/app, vì vậy khi chạy những lệnh trên, nó sẽ trực tiếp mount luôn ra ngoài host, những lần chạy service sau đó, nó cứ lấy thư mục gem kia mount vào container và chạy ầm ầm thôi.
 
 ## 8. Practice
 
-[Create a base image](https://docs.docker.com/develop/develop-images/baseimages/)
++ [Create a base image](https://docs.docker.com/develop/develop-images/baseimages/)
 
-[Best practices for writing Dockerfiles
++ [Best practices for writing Dockerfiles
 ](https://docs.docker.com/develop/develop-images/dockerfile_best-practices/)
