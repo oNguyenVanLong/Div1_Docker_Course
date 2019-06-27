@@ -16,7 +16,7 @@
   + Cài đặt `phần mềm`
   + Cấu hình
 
-  ![](https://user-images.githubusercontent.com/49421807/59746865-f2a80b80-92a1-11e9-8faf-c3d56ef4feb4.png)
+  [<img src="https://user-images.githubusercontent.com/49421807/59746865-f2a80b80-92a1-11e9-8faf-c3d56ef4feb4.png">](https://github.com/longnv-0623/Div1_Docker_Course/blob/master/source_code/dockerfile/Dockerfile)
 
   -> Liên tưởng tới cài lại OS
 
@@ -59,7 +59,8 @@
 + [ENV](https://docs.docker.com/engine/reference/builder/#env)
   + Khai báo biến môi trường
   + Vẫn được lưu ngay cả sau khi build xong image.
-    -> Tránh khai báo thông tin nhạy cảm.
+
+  -> Tránh khai báo thông tin nhạy cảm.
 
 + [WORKDIR](https://docs.docker.com/engine/reference/builder/#workdir)
   + Thiết lập thư mục làm việc cho RUN, CMD, ENTRYPOINT, COPY và ADD
@@ -84,6 +85,7 @@
 
 > Note
   + `-y`: Option yes trong yes/no
+
     ![](https://user-images.githubusercontent.com/49421807/59990178-62384500-966c-11e9-84ce-d90ed95dcafd.png)
   + `set -x`: Hiển thị câu lệnh chuẩn bị chạy tới.
     ![](https://user-images.githubusercontent.com/49421807/59752762-04db7700-92ad-11e9-9c04-7126468822bb.png)
@@ -106,8 +108,9 @@
 
 + [ENTRYPOINT](https://docs.docker.com/engine/reference/builder/#entrypoint):
   + Khi chạy docker run, docker exec ... container sẽ lấy ENTRYPOINT + CMD rồi chạy.
-  + VD image ubuntu có ENTRYPOINT là /bin/bash -c
-    Nếu ta sử dụng CMD là bash => lệnh chạy thực sự sẽ là `/bin/bash -c bash`
+  + Ví dụ:
+    + image ubuntu có ENTRYPOINT là /bin/bash -c
+    + Nếu ta sử dụng CMD là bash => lệnh chạy thực sự sẽ là `/bin/bash -c bash`
   + Những lệnh này thường hay dùng trong docker-compose thay vì viết trong dockerfile
 
 
@@ -189,21 +192,7 @@
   + Result
   ![](https://user-images.githubusercontent.com/49421807/60174168-ab3df400-983a-11e9-9a43-b75246cb6bb1.png)
 
-## 7. Khi nào cần build lại image?
-
-+ Khi hệ thống - nội tại image cần có sự thay đổi
-  + cài gem mới (khi chạy bundle install)
-  + cài thêm system dependencies
-    + apt-get install
-
-+ Khi mà hệ thống không phụ thuộc vào những thay đổi thì không cần rebuild
-  + cài gem bằng bundle install --path vendor/bundle
-  + yarn install
-
-+ Ở môi trường dev:
-  + Ta thường có config volumes: .:/path/to/app, vì vậy khi chạy những lệnh trên, nó sẽ trực tiếp mount luôn ra ngoài host, những lần chạy service sau đó, nó cứ lấy thư mục gem kia mount vào container và chạy ầm ầm thôi.
-
-## 8. Practice
+## 7. Practice
 
 + [Create a base image](https://docs.docker.com/develop/develop-images/baseimages/)
 

@@ -559,3 +559,18 @@ dev:
 + Note:
 
   Hãy luôn giữ cho container spring running
+
+
+## Khi nào cần build lại image?
+
++ Khi hệ thống - nội tại image cần có sự thay đổi
+  + cài gem mới (khi chạy bundle install)
+  + cài thêm system dependencies
+    + apt-get install
+
++ Khi mà hệ thống không phụ thuộc vào những thay đổi thì không cần rebuild
+  + cài gem bằng bundle install --path vendor/bundle
+  + yarn install
+
++ Ở môi trường dev:
+  + Ta thường có config volumes: .:/path/to/app, vì vậy khi chạy những lệnh trên, nó sẽ trực tiếp mount luôn ra ngoài host, những lần chạy service sau đó, nó cứ lấy thư mục gem kia mount vào container và chạy ầm ầm thôi.
