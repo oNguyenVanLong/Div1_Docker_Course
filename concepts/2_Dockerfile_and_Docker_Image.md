@@ -12,7 +12,7 @@
 
 ## 2. Tư tưởng của Dockerfile
 
-  + Chọn `base image`
+  + Chọn `parent image`
   + Cài đặt `phần mềm`
   + Cấu hình
 
@@ -36,7 +36,7 @@
 
 **Thiết lập image gốc**
 + [FROM](https://docs.docker.com/engine/reference/builder/#from)
-  + Sử dụng 1 image có sẵn làm base
+  + Sử dụng 1 image có sẵn làm parent image
   + Hoạt động:
     + Tìm image `ubuntu:16.04` ở trong máy
     + Tự động `pull image` này về từ [DockerHub](https://hub.docker.com/_/ubuntu)
@@ -67,8 +67,7 @@
   + Hoặc khi exec vào container
 
 + [RUN](https://docs.docker.com/engine/reference/builder/#run)
-  + Thực thi trong một layer mới, kể từ layer mới nhất
-  + Commit kết quả và sử dụng cho bước tiếp theo.
+  + Thực thi câu lệnh.
 
 + [COPY](https://docs.docker.com/engine/reference/builder/#copy)
   + Copy file từ host sang image
@@ -193,8 +192,6 @@
   ![](https://user-images.githubusercontent.com/49421807/60174168-ab3df400-983a-11e9-9a43-b75246cb6bb1.png)
 
 ## 7. Practice
-
-+ [Create a base image](https://docs.docker.com/develop/develop-images/baseimages/)
 
 + [Best practices for writing Dockerfiles
 ](https://docs.docker.com/develop/develop-images/dockerfile_best-practices/)
