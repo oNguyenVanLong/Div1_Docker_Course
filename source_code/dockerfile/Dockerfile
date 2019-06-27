@@ -1,8 +1,8 @@
 FROM ubuntu:16.04
 
 # Attached information
-LABEL author.name="HoanKy"
-LABEL author.email="hoanki2212@gmail.com"
+LABEL author.name="HoanKy" \
+      author.email="hoanki2212@gmail.com"
 
 # Configure the main working directory. This is the base
 # directory used in any further RUN, COPY, and ENTRYPOINT
