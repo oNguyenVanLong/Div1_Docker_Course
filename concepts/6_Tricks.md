@@ -1,3 +1,4 @@
+![](https://user-images.githubusercontent.com/49421807/59478352-34404d00-8e83-11e9-8a86-1fa835819c5a.png)
 ## 1. Tối ưu image
 
 + Người ta luôn cố gắng giới hạn kích thước của image xuống thấp nhất có thể. Để làm gì thì chắc các bạn cũng nắm được rồi.
@@ -574,3 +575,33 @@ dev:
 
 + Ở môi trường dev:
   + Ta thường có config volumes: .:/path/to/app, vì vậy khi chạy những lệnh trên, nó sẽ trực tiếp mount luôn ra ngoài host, những lần chạy service sau đó, nó cứ lấy thư mục gem kia mount vào container và chạy ầm ầm thôi.
+
+##### Note
+  + Chúng ta có thể bỏ option `networks` trong file `docker-compose.yml` nếu chúng ta không cần config gì khác như `ip`, `subnet`,... (dùng luôn default network khi start container).
+  + Nếu không có nhu cầu access vào database từ host machine thì cũng không cần bind `port` ra :smile: Cụ thể là ở trong service `mysql` chúng ta có thể bỏ options `ports`.
+  + Một số file `docker-compose.yml` dùng `links` thay vì `depends_on` thì thay vì dùng short-hand syntax như:
+    ```yaml
+    web:
+      links:
+      - db
+    ```
+  + Chúng ta nên dùng `<tên service>:<service alias>` để dễ dàng cho việc maintain
+    ```yaml
+    web:
+      links:
+      - mysql:db
+    ```
+  + Khi làm việc với `cron jobs` chúng ta cần chú ý tới việc setting timezone cho container. Chúng ta có thể setting cho chúng thông qua `Dockerfile` hoặc biến env khi chạy container.
+
++ Để  speed up app thì chúng ta sẽ
+
+  + Khởi động container `mysql`, `redis`, `worker` ngay từ đầu bằng việc chạy daemon:
+    ``` bash
+    docker-compose up -d mysql redis worker
+    ```
+
+  + Chạy rails app bằng lệnh sau:
+    ```bash
+    docker-compose run --rm --service-ports app
+    ```
+
