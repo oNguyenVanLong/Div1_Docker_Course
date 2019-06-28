@@ -11,9 +11,9 @@
 > The docker run command first creates a writeable container layer over the specified image, and then starts it using the specified command
 
   ```shell
-  docker run 
-    -v <forder_in_host>:<forder_in_container> 
-    -p <port_in_host>:<port_in_container> 
+  docker run
+    -v <forder_in_host>:<forder_in_container>
+    -p <port_in_host>:<port_in_container>
     -it <image_name> /bin/bash
   ```
 
@@ -34,14 +34,14 @@
       ```
     + Run
       ```
-      docker run -p 9000:80 -it ubuntu_nginx /bin/bash
+      docker run -p 9000:80 -it hoanky/ubuntu_nginx /bin/bash
       ```
       ![](https://user-images.githubusercontent.com/49421807/60284914-eb829c80-9936-11e9-8c04-cdc70708aab2.png)
       ![](https://camo.githubusercontent.com/53ccfe2c05911d26d0093800cea1b74eee7333ce/68747470733a2f2f696d616765732e7669626c6f2e617369612f38333531633333362d393130312d343334342d623632362d3937313933666434386563382e706e67)
-      
+
     + Run with mount
       ```
-      docker run -v ~/Div1_Docker_Course/source_code/dockerfile/web_root:/var/www/html -p 9000:80 -it ubuntu_nginx /bin/bash
+      docker run -v ~/Div1_Docker_Course/source_code/dockerfile/web_root:/var/www/html -p 9000:80 -it hoanky/ubuntu_nginx /bin/bash
       ```
 
       Thay thế ```~/Div1_Docker_Course/source_code/dockerfile/web_root``` cho đúng với trên máy bạn nhé !

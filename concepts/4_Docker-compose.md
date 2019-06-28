@@ -188,12 +188,12 @@
 
 ## 4. Cách sử dụng
 
-####Lý thuyết
+#### Lý thuyết
 
   + docker-compose build
 
     + Build image đã được định nghĩa trong docker-compose.yml
-  
+
     + Khi khai báo service tất cả những key ngoài `build` ra thì những thứ còn tại đều vô dụng trong Dockerfile
 
     + Tương tự `docker build` tuy nhiên tiết kiệm thời gian rất nhiều.
@@ -203,11 +203,11 @@
     + Tiến hành run service
 
     + Có thể chạy background với tham số -d
-    
+
     + Khi chạy ngầm, phải dùng `docker-compose logs` để xem log của service.
-    
+
     + Ngay cả khi chưa chạy lệnh build, khi up, docker vẫn sẽ build cho ta hoặc pull image về, tạo volume cần thiết, rồi mới up service
-    
+
     + Mặc định docker sẽ tạo cho ta 1 network nếu ta không khai báo network, tất cả các service đều có thể nhìn thấy nhau.
 
   + docker-compose down
@@ -222,7 +222,10 @@
 
 ####Thực hành
 
-+ [Sample apps with Compose](https://docs.docker.com/compose/samples-for-compose/)
++ [Get started with Docker Compose
+](https://docs.docker.com/compose/gettingstarted/)
+
++ [Sample apps with Compose: Rails, Django, WordPress](https://docs.docker.com/compose/samples-for-compose/)
 
 ###### Note
 
