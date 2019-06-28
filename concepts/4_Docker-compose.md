@@ -1,26 +1,8 @@
-## 1. Giải pháp
+![](https://user-images.githubusercontent.com/49421807/60306722-8d23e100-996b-11e9-9f0a-80682ff61d3b.png)
 
-Ứng dụng Docker trong dự án như thế nào ?
+## 1. Docker compose
 
-+ Giải pháp đơn giản
-  + Dùng Dockerfile, cài đặt tất cả những môi trường cần thiết (mysql, redis, php,... ) lên một container duy nhất.
-
-  + Rồi chạy project trên container đó.
-
-+ Tuy nhiên
-  + Dễ nhận thấy sự chồng chéo && khó quản lý trong container duy nhất đó.
-  + Nếu như bạn muốn dùng kết hợp nhiều image có sẵn trên DockerHub thì sao ?
-  + Hơn nữa, với tư duy của OOP, một class thì không nên cõng nhiều nhiệm vụ.
-
-+ Giải pháp tốt hơn:
-  + Cách vận hành mang thiên hướng service
-  + Khi đó, khai báo ra nhiều service khác nhau (mysql service, redis service ...)
-  + Sử dụng `docker-compose.yml` để khai báo và điều phối các service.
-  + Chỉ cần một lệnh duy nhất là setup xong môi trường
-    ```shell
-    docker-compose up
-    ```
-+ Nếu Dockerfile như các công thức nấu ăn thì docker-compose như là cách thức để bày những món ăn đã chế biến lên bàn ăn.
+  [Khai báo và vận hành nhiều container](https://docs.docker.com/compose/overview/)
 
 ## 2. Viết docker-compose
 
@@ -210,18 +192,22 @@
 
   + docker-compose build
 
-    + Dùng để build những image được định nghĩa trong docker-compose.yml
-
+    + Build image đã được định nghĩa trong docker-compose.yml
+  
     + Khi khai báo service tất cả những key ngoài `build` ra thì những thứ còn tại đều vô dụng trong Dockerfile
 
-    + Chả khác gì so với `docker build`. Tuy nhiên tiết kiệm thời gian rất nhiều.
+    + Tương tự `docker build` tuy nhiên tiết kiệm thời gian rất nhiều.
 
   + docker-compose up
 
     + Tiến hành run service
+
     + Có thể chạy background với tham số -d
+    
     + Khi chạy ngầm, phải dùng `docker-compose logs` để xem log của service.
+    
     + Ngay cả khi chưa chạy lệnh build, khi up, docker vẫn sẽ build cho ta hoặc pull image về, tạo volume cần thiết, rồi mới up service
+    
     + Mặc định docker sẽ tạo cho ta 1 network nếu ta không khai báo network, tất cả các service đều có thể nhìn thấy nhau.
 
   + docker-compose down
@@ -236,10 +222,7 @@
 
 ####Thực hành
 
-+ [Docker_for_Laravel](https://github.com/longnv-0623/Div1_Docker_Course/blob/master/concepts/5_Docker_Laravel.md)
-
-+ [Docker_for_Ruby_On_Rails](https://github.com/longnv-0623/Div1_Docker_Course/blob/master/concepts/5_Docker_Rails.md)
-
++ [Sample apps with Compose](https://docs.docker.com/compose/samples-for-compose/)
 
 ###### Note
 
