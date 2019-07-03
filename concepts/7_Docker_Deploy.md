@@ -1,10 +1,6 @@
-## 1. Single server
-Updating...
+[The easiest way to deploy an application is to run it on a single server, similar to how you would run your development environment. If you want to scale up your application, you can run Compose apps on a Swarm cluster](https://docs.docker.com/compose/production)
 
-## 2. Multi server
+[Docker Swarm](https://docs.docker.com/engine/swarm/)
 
-### 2.1 Docker Swarm
-  Updating...
 
-### 2.2 Docker Kubernetes
-  Updating...
+[Docker Kubernetes](https://www.docker.com/products/kubernetes)
