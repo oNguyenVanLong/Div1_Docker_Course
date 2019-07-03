@@ -517,51 +517,6 @@ dev:
 + Builder của ta thực hiện nhiệm vụ chạy `rake assets:precompile`, nó sẽ cần cài yarn, đồng thời khi chạy câu lệnh trên còn sinh ra thêm 1 đống `node_modules` nữa, ta đã tiết kiệm được kha khá dung lượng của image production.
 
 
-### 7.2 Preload for rals project với spring
-
-+ From [this](https://github.com/jonleighton/spring-docker-example) example
-
-+ Step 1: Add gem, then install it
-  ```
-  $ gem 'spring-commands-rspec'
-  $ gem 'spring-commands-rubocop'
-  ```
-
-  ```
-  $ bundle install
-  $ bundle exec spring binstub --all
-  ```
-
-+ Step 2: Add service to docker-compose.yml
-  ```
-    spring:
-      container_name: spring
-      build: .
-      volumes:
-        - .:/app
-      restart: always
-      command: bundle exec spring server
-      networks:
-        - kauriru
-      # This ensures that the pid namespace is shared between the host
-      # and the container. It's not necessary to be able to run spring
-      # commands, but it is necessary for "spring status" and "spring stop"
-      # to work properly.
-      pid: host
-  ```
-
-+ Step 3: Config
-
-  ```
-  config/spring_client.rb
-  ENV["SPRING_SOCKET"] = "tmp/spring.sock"
-  ```
-
-+ Note:
-
-  Hãy luôn giữ cho container spring running
-
-
 ## Khi nào cần build lại image?
 
 + Khi hệ thống - nội tại image cần có sự thay đổi

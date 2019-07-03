@@ -12,9 +12,9 @@
 
 ## 2. Tư tưởng của Dockerfile
 
-  + Chọn `parent image`
-  + Cài đặt `phần mềm`
-  + Cấu hình
+  + **Thiết lập image gốc**
+  + **Cài đặt phần mềm**
+  + **Cấu hình**
 
   [<img src="https://user-images.githubusercontent.com/49421807/59746865-f2a80b80-92a1-11e9-8faf-c3d56ef4feb4.png">](https://github.com/longnv-0623/Div1_Docker_Course/blob/master/source_code/dockerfile/Dockerfile)
 
@@ -156,7 +156,7 @@
     ![](https://user-images.githubusercontent.com/49421807/60155332-04466180-9814-11e9-9adf-dd60e300904e.png)
 
 + Dangling image.
-  + Layers không còn được sử dụng nữa.
+  + Layers mà không được layer cha trỏ tới nữa do Dockerfile đã thay đổi.
   + [List images](https://docs.docker.com/engine/reference/commandline/images/)
     ```
     docker images
