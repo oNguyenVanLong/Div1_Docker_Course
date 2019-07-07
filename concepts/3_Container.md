@@ -1,6 +1,6 @@
 ![](https://camo.githubusercontent.com/957fbc8b45fc596089690cb9186100224b270e97/68747470733a2f2f696d616765732e7669626c6f2e617369612f37353164373531322d633965372d343461352d626535362d3662316666393039366164662e706e67)
 
-![](https://user-images.githubusercontent.com/49421807/60410826-51e81300-9bf4-11e9-9d1c-ff27eaa52be6.png)
+![](https://user-images.githubusercontent.com/49421807/60763883-68381800-a0a7-11e9-8e96-7fde320029e9.png)
 
 
 - Run image (read-only) -> container.
@@ -27,27 +27,27 @@
     -it: Chạy container và mở terminal bằng /bin/bash
 
 
-  + Example:
+## 2. Thực hành
 
-    + Build hoặc pull image
-      ```
-      docker pull hoanky/ubuntu_nginx
-      ```
-    + Run
-      ```
-      docker run -p 9000:80 -it hoanky/ubuntu_nginx /bin/bash
-      ```
-      ![](https://user-images.githubusercontent.com/49421807/60284914-eb829c80-9936-11e9-8c04-cdc70708aab2.png)
-      ![](https://camo.githubusercontent.com/53ccfe2c05911d26d0093800cea1b74eee7333ce/68747470733a2f2f696d616765732e7669626c6f2e617369612f38333531633333362d393130312d343334342d623632362d3937313933666434386563382e706e67)
++ Build hoặc pull image
+  ```
+  docker pull hoanky/ubuntu_nginx
+  ```
++ Run
+  ```
+  docker run -p 9000:80 -it hoanky/ubuntu_nginx /bin/bash
+  ```
+  ![](https://user-images.githubusercontent.com/49421807/60284914-eb829c80-9936-11e9-8c04-cdc70708aab2.png)
+  ![](https://camo.githubusercontent.com/53ccfe2c05911d26d0093800cea1b74eee7333ce/68747470733a2f2f696d616765732e7669626c6f2e617369612f38333531633333362d393130312d343334342d623632362d3937313933666434386563382e706e67)
 
-    + Run with mount
-      ```
-      docker run -v ~/Div1_Docker_Course/source_code/dockerfile/web_root:/var/www/html -p 9000:80 -it hoanky/ubuntu_nginx /bin/bash
-      ```
++ Run with mount
+  ```
+  docker run -v ~/Div1_Docker_Course/source_code/dockerfile/web_root:/var/www/html -p 9000:80 -it hoanky/ubuntu_nginx /bin/bash
+  ```
 
-      Thay thế ```~/Div1_Docker_Course/source_code/dockerfile/web_root``` cho đúng với trên máy bạn nhé !
+  Thay thế ```~/Div1_Docker_Course/source_code/dockerfile/web_root``` cho đúng với trên máy bạn nhé !
 
-      ![](https://camo.githubusercontent.com/77244822b9ada2bc0b66b552c65a085075e00972/68747470733a2f2f696d616765732e7669626c6f2e617369612f30386435386566652d386434352d346335662d616138372d6135396237653936666638302e706e67)
+  ![](https://camo.githubusercontent.com/77244822b9ada2bc0b66b552c65a085075e00972/68747470733a2f2f696d616765732e7669626c6f2e617369612f30386435386566652d386434352d346335662d616138372d6135396237653936666638302e706e67)
 
 
 - Kiểm tra
@@ -66,12 +66,15 @@
   docker restart container 	# Khi sửa file config, cần restart lại container
   ```
 
-- Docker commit
+## 3. Tái bút
 
+-  **Image là những snapshot, immuatable (bất biến, read-only) của container. Container là những running (hoặc stopped) instance của image**
+
++ [FYI_1](https://stackoverflow.com/a/23667302)
+
++ [FYI_2](https://www.docker.com/resources/what-container)
+
+- Docker commit
   + Image read-only, không thể thay đổi được
   + Tuy nhiên ta lại muốn lưu trạng thái của 1 container đang chạy lại, để từ đó tạo ra nhiều instance mới.
   + `docker-commit` giúp ta làm điều đó, nó sẽ tạo ra 1 image mới chứa toàn bộ dữ liệu của container lại thời điểm đó
-
-  **Image là những snapshot, immuatable (bất biến, read-only) của container. Container là những running (hoặc stopped) instance của image**
-
-  + [FYI](https://stackoverflow.com/a/23667302)

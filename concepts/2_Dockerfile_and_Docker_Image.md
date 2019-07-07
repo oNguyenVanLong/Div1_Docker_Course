@@ -156,7 +156,6 @@
     ![](https://user-images.githubusercontent.com/49421807/60155332-04466180-9814-11e9-9adf-dd60e300904e.png)
 
 + Dangling image.
-  + Layers mà không được layer cha trỏ tới nữa do Dockerfile đã thay đổi.
   + [List images](https://docs.docker.com/engine/reference/commandline/images/)
     ```
     docker images
@@ -164,6 +163,9 @@
     ![](https://user-images.githubusercontent.com/49421807/60166419-5a72cf00-982b-11e9-9be0-3f8c10f2f007.png)
 
     > The default docker images will show all top level images, their repository and tags, and their size.
+  
+  + Những image (nhánh cây) có chứa layer mà không được layer cha trỏ tới nữa do Dockerfile đã thay đổi.
+  
   + List dangling images
     ```
     docker images --filter "dangling=true"
