@@ -2,9 +2,16 @@
 
 ![](https://user-images.githubusercontent.com/49421807/60308227-1ccc8e00-9972-11e9-8227-e9879d3e3a06.png)
 
-[Quickstart: Compose and Rails](https://docs.docker.com/compose/rails)
+### 1. Setup
++ [Init project with Docker && Rails](https://docs.docker.com/compose/rails)
 
-Tối ưu:
+  `Dựng máy ảo, rails new trong máy ảo rồi mount các thưu mục ra ngoài`
+
+  ![](https://user-images.githubusercontent.com/49421807/62334864-91f02d80-b4f3-11e9-8c16-5cb16d82bca7.png)
+
++ [Apply Docker to project]()
+
+### 2. Tối ưu:
 
 [1. Add spring container](https://github.com/jonleighton/spring-docker-example)
 

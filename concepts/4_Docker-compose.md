@@ -32,41 +32,26 @@
   + `service1` và `service2` giúp định nghĩa những service mà dự án sử dụng.
   + Ví dụ:
     ```yaml
-    web:
-      build:
-        context: web
-      env_file:
-        - .env
-      command: yarn start
-      restart: always
-      volumes:
-        - ./web:/usr/src/app
-      ports:
-        - 60000:3000
-
-    server:
-      build:
-        context: server
-      env_file:
-        - .env
-      command: bash -c "rm -rf ./tmp/pids && rails s -b 0.0.0.0"
-      tty: true
-      stdin_open: true
-      restart: always
-      depends_on:
-        - db
-      volumes:
-        - ./server:/usr/src/app
-      ports:
-        - 60001:3000
-
-    db:
-      image: postgres:11.2-alpine
-      env_file:
-        - .env
-      volumes:
-        - ./tmp/postgresql/data:/var/lib/postgresql/data
-      restart: always
+    services:
+      mysql:
+        image: mysql:5.7
+        container_name: mysql
+        restart: always
+        environment:
+          MYSQL_ROOT_PASSWORD: root
+        volumes:
+          - ./docker/database:/var/lib/mysql
+      web:
+        container_name: web
+        build: .
+        volumes:
+          - .:/my_app
+        ports:
+          - "3000:3000"
+        environment:
+          DATABASE_HOST: mysql
+          DATABASE_USER_NAME: root
+          DATABASE_PASSWORD: root
     ```
 
   + `build`: chỉ định context để build image, từ đó docker sẽ lấy image này để tạo container
@@ -103,90 +88,7 @@
   * Khi ta tự tạo volume ở bên ngoài (external) thì khai báo ở đây để có thể dùng được trong service.
 
 
-
-## 3. Ví dụ
-
-+ Dưới đây là docker-compose của 1 dự án web nhỏ, bật 3 terminal để chạy
-
-  + rails s
-  + yarn start
-  + node index.js
-
-+ File
-
-  ```yaml
-  version: "3.7"
-  services:
-    proxy:
-      build:
-        context: proxy
-      env_file:
-        - .env
-      restart: always
-      command: ["nginx", "-g", "daemon off;"]
-      volumes:
-        - ./proxy/fsocial.conf:/etc/nginx/conf.d/default.conf
-        - ./tmp/nginx/log:/var/log/nginx
-      ports:
-        - 3333:80
-      depends_on:
-        - web
-        - server
-
-    web:
-      build:
-        context: web
-      env_file:
-        - .env
-      command: yarn start
-      restart: always
-      volumes:
-        - ./web:/usr/src/app
-      ports:
-        - 60000:3000
-
-    server:
-      build:
-        context: server
-      env_file:
-        - .env
-      command: bash -c "rm -rf ./tmp/pids && rails s -b 0.0.0.0"
-      tty: true
-      stdin_open: true
-      restart: always
-      depends_on:
-        - db
-      volumes:
-        - ./server:/usr/src/app
-      ports:
-        - 60001:3000
-
-    db:
-      image: postgres:11.2-alpine
-      env_file:
-        - .env
-      volumes:
-        - ./tmp/postgresql/data:/var/lib/postgresql/data
-      restart: always
-
-    adminer:
-      image: adminer
-      restart: always
-      ports:
-        - 60002:8080
-
-    utils-yml:
-      build:
-        context: utils/yml
-      command: node index.js
-      env_file:
-        - .env
-      volumes:
-        - ./web:/usr/src/app/web
-        - ./utils:/usr/src/app/utils
-  ```
-
-## 4. Cách sử dụng
+## 3. Cách sử dụng
 
 #### Lý thuyết
 
@@ -220,7 +122,7 @@
 
     + Xem log service
 
-####Thực hành
+#### Thực hành
 
 + [Get started with Docker Compose
 ](https://docs.docker.com/compose/gettingstarted/)
